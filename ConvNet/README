@@ -1,1 +1,50 @@
+## 1. Introduction
+- What is your MSE/MAE with linreg vs tuned network? 
+	MSE/MAE of my tuned network reduced from 19.88 MSE using 15 neurons, to 14.06 MSE, respectively. After widening the model and adding on hidden layer with size 30, I was able to train with 15 neurons to provide this result.
 
+    Adding 5 layers with 128 neurons increased my MSE to 38.67. 
+
+
+## 2 Intro to convolution operations: padding
+		
+- What is a response layer? (Give a brief, 1-sentence description)
+    A response layer, normalizes an input allowing batch processessing of smaller portions of an input. 
+- Given the filter shape of (26, 26, 32), what does each number represent?
+    The first and second numbers represents the dimensions of the input, usually a picture and the third number preresents the depth. 
+- Given 6x6 input and filter of (3,3): what is the response shape that we get? 
+    (4,4)
+- Given (33, 33, 1) input and filter of (2,2): what is the response shape that we get? 
+    (32,32)
+- What is the difference between 'valid' and 'same' padding? Given 6x6 input and filter of (3,3), what are the response shapes for both options? 
+    Valid pading drops any bits that arent fully encapsulated by a filter. Same padding pads evenly around the border but will add aditional padding if needed. 
+    Valid-(4,4)
+    Same-(6,6)
+
+## 3 Convolution Parameters: Stride and Pooling
+- What is max pooling? (Give a brief, 1-sentence description)
+    Max pooling is a downsampling method that takes the largest value in a sample and applies it across the entire sample. 
+
+- If I apply pooling of 2 (2,2 window with a stride of 2) to a (6,6) array, what is the resulting size?
+    (3,3)
+
+## 4 ConvNet Architecture
+-Define I, O, F, S, P as used in this lecture (Give a brief, 1-sentence description)
+    I: Input Volume is the shape of the inputting image or frame
+    O: Output Volume is the shape of the normalized frame. O = (I-F+2P)/(S+1)
+    F: Filter is the shape of the filter.
+    S: Stride is the distance of the steps between windows. 
+    P: Padding is the ammount added to the edges of a frame to fully encapsulate it by the filter. 
+-What is my output size if Input = (100, 100), kernel size=(2, 2), the stride of 1, and no pooling? 
+    (46,46)
+-How many weights do I have if I have 24 such filters stacked (conv2_24)?
+    (2x2X2)*24=192
+-Solve for the padding (P), in terms of I, F, and S, if we want the input and output size to remain the same. 
+    P = (F-1)/2
+
+## 5 Practical Patterns
+- What can we use the ImageDataGenerator for? What can it help us fight? (Give a brief, 1-sentence description)
+    ImageDataGenerator allows us to batch process images into usable tensors. 
+- What is a better idea: To use one larger kernel (8,8) or multiple stacked smaller ones, 4x(2,2)? Why? Show the number of weights for each option. 
+    Multiple small kernals is preferred to one large. 
+    conv1_24 = (8x8x1)*24 = 1536
+    conv4_24 = (2x2x4)*24 = 384
